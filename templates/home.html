@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Network - Home</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f4f9;
+      margin: 0;
+      padding: 0;
+      color: #333;
+    }
+
+    /* Navbar */
+    .navbar {
+      background-color: #4CAF50;
+      color: white;
+      padding: 20px 30px;
+      font-size: 28px;
+      font-weight: bold;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      letter-spacing: 1px;
+      text-align: left;
+    }
+
+    .container {
+      max-width: 500px;
+      margin: 60px auto;
+      padding: 30px;
+      background: white;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      border-radius: 10px;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #333;
+    }
+
+    form {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    button {
+      padding: 12px 20px;
+      background-color: #4CAF50;
+      border: none;
+      color: white;
+      font-size: 16px;
+      font-weight: bold;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+
+    .match-card {
+      background: #f9f9f9;
+      border-left: 6px solid #4CAF50;
+      padding: 15px 20px;
+      margin-bottom: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    }
+
+    .match-name {
+      font-weight: bold;
+      font-size: 18px;
+      margin-bottom: 5px;
+    }
+
+    .match-details {
+      margin-top: 5px;
+      font-size: 14px;
+    }
+
+    .match-details ul {
+      margin: 5px 0 0 20px;
+      padding: 0;
+    }
+
+    .logout-link {
+      display: block;
+      text-align: center;
+      margin-top: 30px;
+      font-weight: bold;
+      color: #4CAF50;
+      text-decoration: none;
+    }
+
+    .logout-link:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div class="navbar">
+    Network
+  </div>
+
+  <div class="container">
+    <h2>Welcome, {{ username }}!</h2>
+
+    <form method="post">
+      <button type="submit">🔍 Find Matches</button>
+    </form>
+
+    {% if top_matches %}
+      <h2 style="text-align:center; margin-bottom: 20px;">Your Top Matches</h2>
+      {% for name, description, goals, score in top_matches %}
+        <div class="match-card">
+          <div class="match-name">{{ name }}</div>
+          <div class="match-details"><strong>Description:</strong> {{ description }}</div>
+          <div class="match-details"><strong>Goals:</strong>
+            <ul>
+              {% for i in goals %}
+                <li>{{ i }}</li>
+              {% endfor %}
+            </ul>
+          </div>
+        </div>
+      {% endfor %}
+    {% endif %}
+
+    <a href="{{ url_for('logout') }}" class="logout-link">Logout</a>
+  </div>
+</body>
+</html>

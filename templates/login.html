@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Log In - Network</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f4f9;
+      margin: 0;
+      padding: 0;
+    }
+
+    /* Navbar */
+    .navbar {
+      background-color: #4CAF50;
+      color: white;
+      padding: 20px 30px;
+      font-size: 28px;
+      font-weight: bold;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      letter-spacing: 1px;
+    }
+
+    .container {
+      max-width: 400px;
+      margin: 60px auto 20px;
+      padding: 30px;
+      background: white;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      border-radius: 10px;
+    }
+
+    h2 {
+      color: #333;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    label {
+      font-weight: bold;
+      display: block;
+      margin-top: 15px;
+      color: #333;
+    }
+
+    input[type="text"],
+    input[type="password"] {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      box-sizing: border-box;
+      font-size: 14px;
+    }
+
+    input[type="submit"] {
+      margin-top: 20px;
+      padding: 10px 20px;
+      background-color: #4CAF50;
+      border: none;
+      color: white;
+      font-size: 16px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+      width: 100%;
+    }
+
+    input[type="submit"]:hover {
+      background-color: #45a049;
+    }
+
+    .link {
+      margin-top: 20px;
+      display: block;
+      color: #4CAF50;
+      text-decoration: none;
+      font-weight: bold;
+      text-align: center;
+    }
+
+    .link:hover {
+      text-decoration: underline;
+    }
+
+    .error-message {
+      color: red;
+      margin-bottom: 10px;
+      text-align: center;
+    }
+
+    .about {
+      max-width: 600px;
+      margin: 30px auto;
+      text-align: center;
+      color: #555;
+      font-size: 16px;
+      padding: 0 20px;
+    }
+
+    .about strong {
+      color: #4CAF50;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="navbar">
+    Network
+  </div>
+
+  <div class="container">
+    <h2>Log In</h2>
+
+    {% if error %}
+      <p class="error-message">{{ error }}</p>
+    {% endif %}
+
+    <form method="post">
+      <label>Username:</label>
+      <input type="text" name="username" required>
+
+      <label>Password:</label>
+      <input type="password" name="password" required>
+
+      <input type="submit" value="Log In">
+    </form>
+
+    <a class="link" href="{{ url_for('signup') }}">No account? Sign up</a>
+  </div>
+
+  <div class="about">
+    <p><strong>Network</strong> helps you connect with like-minded people based on your goals and passions. Whether you're here to collaborate, grow, or just find your people — we're here to match you with the right network.</p>
+  </div>
+
+</body>
+</html>

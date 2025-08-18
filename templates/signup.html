@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Sign Up - Network</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f4f9;
+      margin: 0;
+      padding: 0;
+    }
+
+    /* Navbar */
+    .navbar {
+      background-color: #4CAF50;
+      color: white;
+      padding: 20px 30px;
+      font-size: 28px;
+      font-weight: bold;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      letter-spacing: 1px;
+    }
+
+    .container {
+      max-width: 400px;
+      margin: 60px auto 20px;
+      padding: 30px;
+      background: white;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      border-radius: 10px;
+    }
+
+    h2 {
+      color: #333;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    label {
+      font-weight: bold;
+      display: block;
+      margin-top: 15px;
+      color: #333;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="password"],
+    textarea {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      box-sizing: border-box;
+      font-size: 14px;
+    }
+
+    textarea {
+      resize: vertical;
+      height: 80px;
+    }
+
+    button,
+    input[type="submit"] {
+      margin-top: 20px;
+      padding: 10px 20px;
+      background-color: #4CAF50;
+      border: none;
+      color: white;
+      font-size: 16px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    button:hover,
+    input[type="submit"]:hover {
+      background-color: #45a049;
+    }
+
+    .step {
+      display: none;
+    }
+
+    .step.active {
+      display: block;
+    }
+
+    .error-message {
+      color: red;
+      margin-bottom: 10px;
+      text-align: center;
+    }
+
+    .link {
+      margin-top: 20px;
+      display: block;
+      color: #4CAF50;
+      text-decoration: none;
+      font-weight: bold;
+      text-align: center;
+    }
+
+    .link:hover {
+      text-decoration: underline;
+    }
+
+    .about {
+      max-width: 600px;
+      margin: 30px auto;
+      text-align: center;
+      color: #555;
+      font-size: 16px;
+      padding: 0 20px;
+    }
+
+    .about strong {
+      color: #4CAF50;
+    }
+
+    #goals-container input {
+      margin-top: 10px;
+    }
+  </style>
+
+  <script>
+    function addGoal() {
+      const container = document.getElementById("goals-container");
+      const input = document.createElement("input");
+      input.type = "text";
+      input.name = "goals";
+      input.placeholder = "Enter a goal";
+      input.style.width = "100%";
+      input.style.padding = "10px";
+      input.style.borderRadius = "6px";
+      input.style.border = "1px solid #ccc";
+      container.appendChild(input);
+    }
+
+    function showStep(step) {
+      const steps = document.querySelectorAll('.step');
+      steps.forEach((s) => s.classList.remove('active'));
+      document.getElementById('step-' + step).classList.add('active');
+    }
+
+    function nextStep() {
+      // Validate step 1 inputs before proceeding
+      const username = document.getElementById('username').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value.trim();
+
+      if (!username || !email || !password) {
+        alert("Please fill out all fields before continuing.");
+        return false;
+      }
+      showStep(2);
+      return false; // prevent form submit
+    }
+
+    function prevStep() {
+      showStep(1);
+      return false;
+    }
+
+    window.onload = function() {
+      showStep(1);
+    };
+  </script>
+</head>
+<body>
+  <div class="navbar">Network</div>
+
+  <div class="container">
+    <h2>Create an Account</h2>
+
+    {% if error %}
+      <p class="error-message">{{ error }}</p>
+    {% endif %}
+
+    <form method="post" onsubmit="return false;">
+      <!-- Step 1 -->
+      <div id="step-1" class="step">
+        <label for="username">Username:</label>
+        <input id="username" type="text" name="username" required>
+
+        <label for="email">Email:</label>
+        <input id="email" type="email" name="email" required>
+
+        <label for="password">Password:</label>
+        <input id="password" type="password" name="password" required>
+
+        <button type="button" onclick="nextStep()">Next</button>
+      </div>
+
+      <!-- Step 2 -->
+      <div id="step-2" class="step">
+              <p style="color: gray; text-align: center;"><em>Please be as descriptive as possible. The more you add, the better our AI works.</em></p>
+
+        <label for="description">Description:</label>
+        <textarea id="description" name="description"></textarea>
+
+        <label>Goals:</label>
+        <div id="goals-container">
+          <input type="text" name="goals" placeholder="Enter a goal">
+        </div>
+        <button type="button" onclick="addGoal()">Add Another Goal</button>
+
+        <div style="margin-top: 20px;">
+          <input type="submit" value="Sign Up" onclick="this.form.submit()">
+        </div>
+      </div>
+    </form>
+
+    <a class="link" href="{{ url_for('login') }}">Already have an account? Log in</a>
+  </div>
+
+  <div class="about">
+    <p><strong>Network</strong> helps you connect with like-minded people based on your goals and passions. Whether you're here to collaborate, grow, or just find your people — we're here to match you with the right network.</p>
+  </div>
+</body>
+</html>
