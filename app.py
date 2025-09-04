@@ -14,7 +14,6 @@ DB_FILE = "users.db"
 def normalize(vecs):
     return vecs / np.linalg.norm(vecs, axis=1, keepdims=True)
 
-# ---------- Database Setup ----------
 def init_db():
     conn = sqlite3.connect(DB_FILE)
     c = conn.cursor()
@@ -35,7 +34,6 @@ def init_db():
 
 init_db()
 
-# ---------- DB Helpers ----------
 def add_account(username, email, hashed_pw):
     conn = sqlite3.connect(DB_FILE)
     c = conn.cursor()
@@ -70,7 +68,6 @@ def get_all_profiles():
     conn.close()
     return [{"username": r[0], "description": r[1], "goals": r[2].split(",")} for r in rows]
 
-# ---------- Routes ----------
 @app.route("/", methods=["GET", "POST"])
 def home():
     if "username" not in session:
@@ -83,21 +80,20 @@ def home():
         current_user = session["username"].strip().lower()
         print("Session username (normalized):", current_user)
         print("Profiles from DB:", [u["username"] for u in users])
-
+        account = get_account_by_username(current_user)
+        print(account)
+        email = account["email"]
         if len(users) >= 2:
-            # Prepare goals strings
             for user in users:
                 user["goals_str"] = " ".join(user["goals"])
 
             descriptions = [u["description"] for u in users]
             goals_combined = [u["goals_str"] for u in users]
 
-            # Compute normalized embeddings
             desc_embeddings = normalize(model.encode(descriptions, convert_to_numpy=True))
             goal_embeddings = normalize(model.encode(goals_combined, convert_to_numpy=True))
             print(current_user)
 
-            # Find index of current user
             
             ind = None
             for i, u in enumerate(users):
@@ -116,9 +112,8 @@ def home():
                     score_desc_to_goals = cosine_similarity([desc_embeddings[ind]], [goal_embeddings[i]])[0][0]
                     score_goals_to_desc = cosine_similarity([desc_embeddings[i]], [goal_embeddings[ind]])[0][0]
                     avg_score = 0.3 * score_desc_to_goals + 0.7 * score_goals_to_desc
-                    scores.append((user["username"], user["description"], user["goals"], avg_score))
+                    scores.append((user["username"], user["description"], user["goals"], avg_score, email))
 
-                # Sort by highest average score
                 scores.sort(key=lambda x: x[3], reverse=True)
                 top_matches = scores[:2]
                 print("Top matches:", top_matches)
