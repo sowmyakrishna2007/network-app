@@ -1,7 +1,5 @@
-<!DOCTYPE html>
-<html>
 <head>
-  <title>Network - Home</title>
+  <title>Networkly - Home</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -11,9 +9,8 @@
       color: #333;
     }
 
-    /* Navbar */
     .navbar {
-      background-color: #4CAF50;
+      background: linear-gradient(to right, #6a11cb, #2575fc);
       color: white;
       padding: 20px 30px;
       font-size: 28px;
@@ -24,17 +21,18 @@
     }
 
     .container {
-      max-width: 500px;
+      max-width: 700px;
       margin: 60px auto;
       padding: 30px;
       background: white;
       box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-      border-radius: 10px;
+      border-radius: 12px;
     }
 
     h2 {
       text-align: center;
-      margin-bottom: 20px;
+      font-size: 22px;
+      margin-bottom: 30px;
       color: #333;
     }
 
@@ -44,39 +42,41 @@
     }
 
     button {
-      padding: 12px 20px;
-      background-color: #4CAF50;
+      padding: 12px 24px;
+      background-color: #2575fc;
       border: none;
       color: white;
       font-size: 16px;
       font-weight: bold;
-      border-radius: 6px;
+      border-radius: 8px;
       cursor: pointer;
       transition: background-color 0.3s;
     }
 
     button:hover {
-      background-color: #45a049;
+      background-color: #1a5ee0;
     }
 
     .match-card {
       background: #f9f9f9;
-      border-left: 6px solid #4CAF50;
-      padding: 15px 20px;
+      border-left: 6px solid #2575fc;
+      padding: 20px 24px;
       margin-bottom: 20px;
-      border-radius: 8px;
+      border-radius: 10px;
       box-shadow: 0 2px 6px rgba(0,0,0,0.05);
     }
 
     .match-name {
       font-weight: bold;
       font-size: 18px;
-      margin-bottom: 5px;
+      margin-bottom: 8px;
+      color: #222;
     }
 
     .match-details {
-      margin-top: 5px;
-      font-size: 14px;
+      margin-top: 8px;
+      font-size: 15px;
+      line-height: 1.5;
     }
 
     .match-details ul {
@@ -89,7 +89,7 @@
       text-align: center;
       margin-top: 30px;
       font-weight: bold;
-      color: #4CAF50;
+      color: #2575fc;
       text-decoration: none;
     }
 
@@ -98,9 +98,10 @@
     }
   </style>
 </head>
+
 <body>
   <div class="navbar">
-    Network
+    Networkly
   </div>
 
   <div class="container">
@@ -111,10 +112,11 @@
     </form>
 
     {% if top_matches %}
-      <h2 style="text-align:center; margin-bottom: 20px;">Your Top Matches</h2>
-      {% for name, description, goals, score in top_matches %}
+      <h2>Your Top Matches</h2>
+      {% for name, description, goals, score, email in top_matches %}
         <div class="match-card">
-          <div class="match-name">{{ name }}</div>
+          <div class="match-name">👤
+{{ name }}</div>
           <div class="match-details"><strong>Description:</strong> {{ description }}</div>
           <div class="match-details"><strong>Goals:</strong>
             <ul>
@@ -122,6 +124,7 @@
                 <li>{{ i }}</li>
               {% endfor %}
             </ul>
+            Email: {{email}}
           </div>
         </div>
       {% endfor %}
@@ -130,4 +133,3 @@
     <a href="{{ url_for('logout') }}" class="logout-link">Logout</a>
   </div>
 </body>
-</html>
