@@ -1,0 +1,1 @@
+Networkly - a web-based professional development app that aims to match users with others based on their goals and background. Built with Flask (backend being Python), and utilized NLP techniques such as Sentence Transformers, vector embeddings, and cosine similarities. 
